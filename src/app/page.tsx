@@ -3,7 +3,7 @@ import React from "react";
 import { Divider } from "@heroui/react";
 import Link from "next/link";
 
-export default async function Home(props: { searchParams: any }) {
+export default async function Home() {
   return (
     <>
       <div className="light h-screen bg-[#f6eee3] flex flex-col justify-between overflow-hidden ">
