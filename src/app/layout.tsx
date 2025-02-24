@@ -13,6 +13,7 @@ const body = Barlow({
 const brand = Headland_One({
   display: "swap",
   variable: "--font-brand",
+  subsets: ["latin"],
   weight: ["400"],
 });
 
