@@ -5,17 +5,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-text: var(--font-body);
+  --font-serif: var(--font-serif);
+  --font-heading: var(--font-body);
+  --font-monospace: var(--font-mono);
+  --font-brand: var(--font-brand);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Barlow, Arial, Helvetica, sans-serif;
 }
