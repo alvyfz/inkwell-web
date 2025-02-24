@@ -2,8 +2,6 @@ import { Button } from "@heroui/button";
 import React from "react";
 import { Divider } from "@heroui/react";
 import Link from "next/link";
-import LoginModal from "@/components/LoginModal";
-import { isEmpty } from "lodash";
 
 export default async function Home(props: { searchParams: any }) {
   return (
