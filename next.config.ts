@@ -1,7 +1,14 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  env: {
+    API_DOMAIN: process.env.API_DOMAIN,
+    AES_SECRET: process.env.AES_SECRET,
+    SECRET_TOKEN: process.env.SECRET_TOKEN
+  },
+  images: {
+    domains: ['cloud.appwrite.io']
+  }
+}
 
-export default nextConfig;
+export default nextConfig

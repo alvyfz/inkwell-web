@@ -1,9 +1,19 @@
-import { Button } from "@heroui/button";
-import React from "react";
-import { Divider } from "@heroui/react";
-import Link from "next/link";
+import { Button } from '@heroui/button'
+import React from 'react'
+import { Divider } from '@heroui/react'
+import Link from 'next/link'
+import { cookies } from 'next/headers'
+import Dashboard from '@/app/dashboard'
+import { BrandLogo } from '@/components/BrandLogo'
 
 export default async function Home() {
+  const cookieStore = await cookies()
+
+  const token = cookieStore.get('Authorization')
+
+  if (token) {
+    return <Dashboard />
+  }
   return (
     <>
       <div className="light h-screen bg-[#f6eee3] flex flex-col justify-between overflow-hidden ">
@@ -11,20 +21,20 @@ export default async function Home() {
           <div className=" flex flex-row justify-center ">
             <div className="flex flex-col w-full max-w-[1336px] py-2 px-4 ">
               <div className="flex flex-row justify-between">
-                <h1 className="text-primary font-brand font-bold text-3xl">Inkwell.</h1>
+                <BrandLogo />
                 <div className="flex flex-row gap-2 items-center">
                   <Button
                     as={Link}
-                    href="/signin"
+                    href="/login"
                     className="mr-2"
                     variant="light"
                     color="primary"
                     size="sm"
                   >
-                    Sign In
+                    Login
                   </Button>
                   <Button color="primary" size="sm" as={Link} href="/signup">
-                    Sign Up
+                    Join
                   </Button>
                 </div>
               </div>
@@ -41,7 +51,7 @@ export default async function Home() {
                 stories, share your thoughts, and join a community of passionate writers and
                 readers.
               </desc>
-              <Button className="w-fit mt-5" color="primary" size="lg" as={Link} href={"/signup"}>
+              <Button className="w-fit mt-5" color="primary" size="lg" as={Link} href={'/signup'}>
                 Get Started!
               </Button>
             </div>
@@ -57,5 +67,5 @@ export default async function Home() {
         </footer>
       </div>
     </>
-  );
+  )
 }

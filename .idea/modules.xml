@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/inkwell.iml" filepath="$PROJECT_DIR$/.idea/inkwell.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../inkwell-backend/.idea/inkwell-backend.iml" filepath="$PROJECT_DIR$/../inkwell-backend/.idea/inkwell-backend.iml" />
     </modules>
   </component>
 </project>
