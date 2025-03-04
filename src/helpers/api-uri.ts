@@ -1,6 +1,9 @@
 export enum PATH_API {
   LOGIN = '/users/login',
-  SIGNUP = '/users/signup'
+  SIGNUP = '/users/signup',
+  SEND_OTP = '/users/send-otp',
+  VERIFY_EMAIL = '/users/verify-email',
+  ME = '/users/me'
 }
 
 export enum METHOD {

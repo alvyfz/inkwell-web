@@ -6,9 +6,6 @@ import React, { useState } from 'react'
 import { useForm } from '@mantine/form'
 import toast from '@/helpers/toast'
 import { useOrientation } from 'react-haiku'
-import Image from 'next/image'
-import Illustration from '@/assets/login-illustration.png'
-import Logo from '@/assets/logo-full-white.png'
 import { Button, Input } from '@heroui/react'
 import ThemeModeButton from '@/components/ThemeModeButton'
 import { PATH_API } from '@/helpers/api-uri'
@@ -59,10 +56,9 @@ export default function SignupPage() {
       })
 
       if (!response.isSuccess) {
-        toast.error(response.errMessage)
+        toast.error(response.message)
       } else {
-        toast.success('Signup successfully. Please verify your email to login.')
-        router.push('/login')
+        router.push(`/signup/verify-email?email=${form.values.email}`)
       }
       setIsLoading(false)
     }

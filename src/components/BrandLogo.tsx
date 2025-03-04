@@ -1,15 +1,15 @@
-import { className } from 'postcss-selector-parser'
-
 export const BrandLogo = ({
-  size = '3xl',
+  size = 18,
   color = 'primary',
   className = ''
 }: {
-  size?: string
+  size?: number
   color?: string
   className?: string
 }) => (
   <div className={className}>
-    <h1 className={`text-${color} font-brand font-bold text-${size}`}>Inkwell.</h1>
+    <h1 style={{ fontSize: size }} className={`text-${color} font-brand font-bold  ]`}>
+      Inkwell.
+    </h1>
   </div>
 )

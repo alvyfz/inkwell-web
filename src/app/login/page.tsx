@@ -5,9 +5,6 @@ import React, { useState } from 'react'
 import { useForm } from '@mantine/form'
 import toast from '@/helpers/toast'
 import { useOrientation } from 'react-haiku'
-import Image from 'next/image'
-import Illustration from '@/assets/login-illustration.png'
-import Logo from '@/assets/logo-full-white.png'
 import Link from 'next/link'
 import { Button, Input } from '@heroui/react'
 import ThemeModeButton from '@/components/ThemeModeButton'
@@ -51,7 +48,13 @@ export default function LoginPage() {
       })
 
       if (!response.isSuccess) {
-        toast.error(response.errMessage)
+        console.log(response)
+        if (response.code === 402) {
+          toast.error('Please verify your email first.')
+          router.replace('/signup/verify-email?email=' + values.email)
+        } else {
+          toast.error(response.message)
+        }
       } else {
         const jwtData = decodeJwt(response.payload.token)
         Cookies.set('Authorization', response.payload.token, {
@@ -78,7 +81,7 @@ export default function LoginPage() {
           <h6 className={isPortrait ? 'text-sm sm:text-base md:text-lg' : 'text-lg'}>
             Hi! Welcome Back to
           </h6>
-          <BrandLogo color={'white'} size={'7xl'} className={'py-8'} />
+          <BrandLogo color={'white'} size={60} className={'py-8'} />
           <h6 className={isPortrait ? 'text-base sm:text-lg md:text-xl' : 'text-xl'}>
             Where Ideas Flow.
           </h6>

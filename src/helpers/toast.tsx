@@ -19,7 +19,7 @@ const toast = {
       'success',
       <Icon icon="ic:round-check-circle" fontSize="24" />
     ),
-  error: (description: string) => handleToast('Error', description, 'danger'),
+  error: (description: string) => handleToast(description, undefined, 'danger'),
   info: (title: string, description?: string) => handleToast(title, description),
   handleToast
 }

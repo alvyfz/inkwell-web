@@ -1,7 +1,7 @@
 import { METHOD } from '@/helpers/api-uri'
 import Axios from 'axios'
 import Cookies from 'js-cookie'
-import { encryptAES } from '@/helpers/cryptoAes'
+import { encryptAES } from '@/helpers/crypto-aes'
 import nextConfig from '../../next.config'
 
 const request = async (
@@ -67,8 +67,8 @@ const requestResource = async (
     } else {
       return {
         isSuccess: false,
-        errCode: res?.status || res?.data?.code || 500,
-        errMessage: res?.data?.message || 'Unknown error'
+        code: res?.status || res?.data?.code || 500,
+        message: res?.data?.message || 'Unknown error'
       }
     }
   } catch (err: any) {
@@ -76,8 +76,8 @@ const requestResource = async (
     // const parseError = findJsonInString(err as any);
     return {
       isSuccess: false,
-      errCode: err?.response?.data?.code || err?.status || err?.response?.status || 500,
-      errMessage: err?.response?.data?.message || 'Unknown error'
+      code: err?.response?.data?.code || err?.status || err?.response?.status || 500,
+      message: err?.response?.data?.message || 'Unknown error'
     }
   }
 }
