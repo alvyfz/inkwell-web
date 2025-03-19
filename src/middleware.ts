@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash'
 import { NextResponse, NextRequest } from 'next/server'
 
 const isTokenExpired = (token: string) => {
@@ -8,21 +9,12 @@ const isTokenExpired = (token: string) => {
 }
 
 // This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
   // const lang = request.cookies.get('lang')?.value
   const isPublicPath = publicPath.includes(path)
-  const token = request.cookies.get('Authorization')?.value
-  // let decodedToken: any
-  //
-  // if (token) {
-  //   decodedToken = JSON.parse(atob(token.split('.')[1]))
-  // }
-
-  // // set default language
-  // if (!lang) {
-  //   request.cookies.set('lang', 'en')
-  // }
+  const isPrivatePath = privatePath.includes(path)
+  const token = request.cookies.get('Authorization')?.value as string
 
   // check if token is expired
   if (!isPublicPath && token) {
@@ -31,6 +23,9 @@ export function middleware(request: NextRequest) {
       response.cookies.delete('Authorization')
       return response
     }
+  }
+  if ((isPrivatePath && isEmpty(token)) || (isPrivatePath && token && isTokenExpired(token))) {
+    return NextResponse.redirect(new URL(`/login?redirect=${path}`, request.nextUrl))
   }
 
   // check if user is already logged in and trying to access login and password page
@@ -47,7 +42,9 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/login', '/signup']
+  matcher: ['/app', '/login', '/signup', '/app/new-story']
 }
 
 const publicPath = ['/login', '/signup']
+
+const privatePath = ['/app/new-story']

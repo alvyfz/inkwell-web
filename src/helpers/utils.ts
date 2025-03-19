@@ -6,3 +6,9 @@ export const isValidPassword = (password: string): boolean =>
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password)
 
 export const decodeJwt = (token: string): any => JSON.parse(atob(token.split('.')[1]))
+
+export const capitalizeWords = (string: string) =>
+  string
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')

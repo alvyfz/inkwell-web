@@ -3,7 +3,12 @@ export enum PATH_API {
   SIGNUP = '/users/signup',
   SEND_OTP = '/users/send-otp',
   VERIFY_EMAIL = '/users/verify-email',
-  ME = '/users/me'
+  ME = '/users/me',
+  FILE = '/files',
+  ARTICLE_DRAFT = '/articles/draft',
+  ARTICLE_PUBLISH = '/articles/publish',
+  ALL_TOPIC = '/topics/all',
+  TOPIC = '/topics'
 }
 
 export enum METHOD {

@@ -4,7 +4,8 @@ const nextConfig: NextConfig = {
   env: {
     API_DOMAIN: process.env.API_DOMAIN,
     AES_SECRET: process.env.AES_SECRET,
-    SECRET_TOKEN: process.env.SECRET_TOKEN
+    SECRET_TOKEN: process.env.SECRET_TOKEN,
+    APPWRITE_STORAGE_ENDPOINT: process.env.APPWRITE_STORAGE_ENDPOINT
   },
   images: {
     domains: ['cloud.appwrite.io']

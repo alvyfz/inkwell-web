@@ -1,0 +1,46 @@
+/* styles/debug.css */
+@layer utilities {
+    .debug-screens::before {
+      content: 'xs';
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 50;
+      padding: 0.5rem;
+      background-color: rgba(0, 0, 0, 0.75);
+      color: white;
+      font-family: monospace;
+      font-size: 0.75rem;
+      line-height: 1;
+    }
+  
+    @media (min-width: 640px) {
+      .debug-screens::before {
+        content: 'sm';
+      }
+    }
+  
+    @media (min-width: 768px) {
+      .debug-screens::before {
+        content: 'md';
+      }
+    }
+  
+    @media (min-width: 1024px) {
+      .debug-screens::before {
+        content: 'lg';
+      }
+    }
+  
+    @media (min-width: 1280px) {
+      .debug-screens::before {
+        content: 'xl';
+      }
+    }
+  
+    @media (min-width: 1536px) {
+      .debug-screens::before {
+        content: '2xl';
+      }
+    }
+  }

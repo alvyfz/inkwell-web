@@ -1,0 +1,63 @@
+@import './partials/animations.css';
+@import './partials/blocks.css';
+@import './partials/code.css';
+@import './partials/collab.css';
+@import './partials/lists.css';
+@import './partials/placeholder.css';
+@import './partials/table.css';
+@import './partials/typography.css';
+
+.ProseMirror {
+  @apply caret-black dark:caret-white outline-0 pr-2 pl-2 pt-4 pb-16 z-0  lg:pl-8 lg:pr-8 mx-auto max-w-2xl font-serif;
+
+  .selection {
+    @apply inline;
+  }
+
+  .selection,
+  *::selection {
+    @apply bg-black/10 dark:bg-white/20 inline;
+  }
+
+  & > .react-renderer {
+    @apply my-12 first:mt-0 last:mb-0;
+  }
+
+  &.resize-cursor {
+    @apply cursor-col-resize;
+  }
+
+  .ProseMirror-gapcursor {
+    @apply relative w-full max-w-2xl mx-auto;
+
+    &:after {
+      @apply border-t-black/40 dark:border-t-white/40 w-full -top-[1.5em] max-w-2xl mx-auto left-0 right-0;
+    }
+  }
+}
+
+[data-theme='slash-command'] {
+  width: 1000vw;
+}
+
+
+.toolbar-wrapper {
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent wrapping */
+  scrollbar-width: thin; /* For modern browsers */
+  scrollbar-color: #888 transparent; /* Scrollbar color */
+}
+
+.toolbar-wrapper::-webkit-scrollbar {
+  height: 6px; /* Scrollbar height for WebKit browsers */
+}
+
+.toolbar-wrapper::-webkit-scrollbar-thumb {
+  background-color: #888; /* Scrollbar thumb color */
+  border-radius: 3px; /* Rounded corners */
+}
+
+.toolbar-wrapper::-webkit-scrollbar-track {
+  background-color: transparent; /* Scrollbar track color */
+}
