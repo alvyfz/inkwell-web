@@ -1,25 +1,29 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const useOrientation = () => {
-  const [orientation, setOrientation] = useState<string | null>(null)
+  const [isPortrait, setIsPortrait] = useState<'portrait' | 'landscape' | null>(null)
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && screen.orientation) {
-      setOrientation(screen.orientation.type)
-
-      const handleOrientationChange = () => {
-        setOrientation(screen.orientation.type)
+    // Ensure this runs only on the client side
+    if (typeof window !== 'undefined') {
+      const checkOrientation = () => {
+        setIsPortrait(
+          window.matchMedia('(orientation: portrait)').matches ? 'portrait' : 'landscape'
+        )
       }
 
-      screen.orientation.addEventListener('change', handleOrientationChange)
+      // Check orientation on mount
+      checkOrientation()
 
-      return () => {
-        screen.orientation.removeEventListener('change', handleOrientationChange)
-      }
+      // Add event listener for orientation changes
+      window.addEventListener('resize', checkOrientation)
+
+      // Cleanup event listener on unmount
+      return () => window.removeEventListener('resize', checkOrientation)
     }
   }, [])
 
-  return orientation
+  return isPortrait
 }
 
 export default useOrientation

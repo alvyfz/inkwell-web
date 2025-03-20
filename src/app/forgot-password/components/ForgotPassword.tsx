@@ -20,7 +20,7 @@ type ForgotPasswordFormType = {
 }
 
 export default function ForgotPassword() {
-  const orientation = useOrientation() || 'landscape'
+  const orientation = useOrientation()
   const isPortrait = orientation === 'portrait'
 
   const router = useRouter()
@@ -53,7 +53,7 @@ export default function ForgotPassword() {
     }
   }
 
-  return (
+  return orientation ? (
     <div className="w-screen h-screen bg-black overflow-hidden">
       <div className="fixed right-0 top-0 z-index-50">
         <ThemeModeButton />
@@ -120,5 +120,7 @@ export default function ForgotPassword() {
         </div>
       </div>
     </div>
+  ) : (
+    <></>
   )
 }

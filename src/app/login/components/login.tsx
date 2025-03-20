@@ -20,7 +20,7 @@ type LoginFormType = {
 }
 
 export default function Login() {
-  const orientation = useOrientation() ?? 'portrait'
+  const orientation = useOrientation()
   const isPortrait = orientation === 'portrait'
 
   const router = useRouter()
@@ -67,7 +67,7 @@ export default function Login() {
     }
   }
 
-  return (
+  return orientation ? (
     <div className="w-screen h-screen bg-black">
       <div className="fixed right-0 top-0 z-index-50">
         <ThemeModeButton />
@@ -138,5 +138,7 @@ export default function Login() {
         </div>
       </div>
     </div>
+  ) : (
+    <></>
   )
 }
