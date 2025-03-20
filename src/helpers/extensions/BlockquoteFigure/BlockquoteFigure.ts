@@ -4,7 +4,6 @@ import { Quote } from './Quote'
 import { QuoteCaption } from './QuoteCaption'
 
 declare module '@tiptap/core' {
-  // eslint-disable-next-line no-unused-vars
   interface Commands<ReturnType> {
     blockquoteFigure: {
       setBlockquote: () => ReturnType
@@ -31,13 +30,13 @@ export const BlockquoteFigure = Figure.extend({
 
   addKeyboardShortcuts() {
     return {
-      Enter: () => false,
+      Enter: () => false
     }
   },
 
   addAttributes() {
     return {
-      ...this.parent?.(),
+      ...this.parent?.()
     }
   },
 
@@ -60,21 +59,21 @@ export const BlockquoteFigure = Figure.extend({
                     {
                       type: 'paragraph',
                       attrs: {
-                        textAlign: 'left',
-                      },
-                    },
-                  ],
+                        textAlign: 'left'
+                      }
+                    }
+                  ]
                 },
                 {
-                  type: 'quoteCaption',
-                },
-              ],
+                  type: 'quoteCaption'
+                }
+              ]
             })
             .focus(position + 1)
             .run()
-        },
+        }
     }
-  },
+  }
 })
 
 export default BlockquoteFigure

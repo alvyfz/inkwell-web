@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { useForm } from '@mantine/form'
 import toast from '@/helpers/toast'
-import { useOrientation } from 'react-haiku'
 import Link from 'next/link'
 import { Button, Input } from '@heroui/react'
 import ThemeModeButton from '@/components/ThemeModeButton'
@@ -13,6 +12,7 @@ import { PATH_API } from '@/helpers/api-uri'
 import Cookies from 'js-cookie'
 import { decodeJwt, isValidEmail } from '@/helpers/utils'
 import { BrandLogo } from '@/components/BrandLogo'
+import useOrientation from '@/hooks/useOrientation'
 
 type LoginFormType = {
   email: string

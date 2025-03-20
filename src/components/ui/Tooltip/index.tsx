@@ -5,7 +5,8 @@ import React, { useCallback, JSX } from 'react'
 
 import { TippyProps, TooltipProps } from './types'
 
-const isMac = typeof window !== 'undefined' ? navigator.platform.toUpperCase().indexOf('MAC') >= 0 : false
+const isMac =
+  typeof window !== 'undefined' ? navigator.platform.toUpperCase().indexOf('MAC') >= 0 : false
 
 const ShortcutKey = ({ children }: { children: string }): JSX.Element => {
   const className =
@@ -31,7 +32,7 @@ export const Tooltip = ({
   enabled = true,
   title,
   shortcut,
-  tippyOptions = {},
+  tippyOptions = {}
 }: TooltipProps): JSX.Element => {
   const renderTooltip = useCallback(
     (attrs: TippyProps) => (
@@ -45,14 +46,14 @@ export const Tooltip = ({
         {title && <span className="text-xs font-medium text-neutral-500">{title}</span>}
         {shortcut && (
           <span className="flex items-center gap-0.5">
-            {shortcut.map(shortcutKey => (
+            {shortcut.map((shortcutKey) => (
               <ShortcutKey key={shortcutKey}>{shortcutKey}</ShortcutKey>
             ))}
           </span>
         )}
       </span>
     ),
-    [shortcut, title],
+    [shortcut, title]
   )
 
   if (enabled) {
@@ -63,7 +64,6 @@ export const Tooltip = ({
         touch={false}
         zIndex={99999}
         appendTo={document.body}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...tippyOptions}
         render={renderTooltip}
       >

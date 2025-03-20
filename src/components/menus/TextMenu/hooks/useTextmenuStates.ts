@@ -1,6 +1,5 @@
-import { Helpers } from './../../../../../node_modules/tailwindcss/node_modules/postcss/lib/postcss.d'
 import { Editor, useEditorState } from '@tiptap/react'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { ShouldShowProps } from '../../types'
 import { isCustomNodeSelected, isTextSelected } from '@/helpers/lib/utils'
 

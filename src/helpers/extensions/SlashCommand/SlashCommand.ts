@@ -29,10 +29,10 @@ export const SlashCommand = Extension.create({
         modifiers: [
           {
             name: 'flip',
-            enabled: false,
-          },
-        ],
-      },
+            enabled: false
+          }
+        ]
+      }
     })
   },
 
@@ -52,11 +52,14 @@ export const SlashCommand = Extension.create({
           // TODO
           const isInColumn = this.editor.isActive('column')
 
-          const afterContent = $from.parent.textContent?.substring($from.parent.textContent?.indexOf('/'))
+          const afterContent = $from.parent.textContent?.substring(
+            $from.parent.textContent?.indexOf('/')
+          )
           const isValidAfterContent = !afterContent?.endsWith('  ')
 
           return (
-            ((isRootDepth && isParagraph && isStartOfNode) || (isInColumn && isParagraph && isStartOfNode)) &&
+            ((isRootDepth && isParagraph && isStartOfNode) ||
+              (isInColumn && isParagraph && isStartOfNode)) &&
             isValidAfterContent
           )
         },
@@ -66,7 +69,8 @@ export const SlashCommand = Extension.create({
 
           const end = $from.pos
           const from = $head?.nodeBefore
-            ? end - ($head.nodeBefore.text?.substring($head.nodeBefore.text?.indexOf('/')).length ?? 0)
+            ? end -
+              ($head.nodeBefore.text?.substring($head.nodeBefore.text?.indexOf('/')).length ?? 0)
             : $from.start()
 
           const tr = state.tr.deleteRange(from, end)
@@ -76,25 +80,29 @@ export const SlashCommand = Extension.create({
           view.focus()
         },
         items: ({ query }: { query: string }) => {
-          const withFilteredCommands = GROUPS.map(group => ({
+          const withFilteredCommands = GROUPS.map((group) => ({
             ...group,
             commands: group.commands
-              .filter(item => {
+              .filter((item) => {
                 const labelNormalized = item.label.toLowerCase().trim()
                 const queryNormalized = query.toLowerCase().trim()
 
                 if (item.aliases) {
-                  const aliases = item.aliases.map(alias => alias.toLowerCase().trim())
+                  const aliases = item.aliases.map((alias) => alias.toLowerCase().trim())
 
-                  return labelNormalized.includes(queryNormalized) || aliases.includes(queryNormalized)
+                  return (
+                    labelNormalized.includes(queryNormalized) || aliases.includes(queryNormalized)
+                  )
                 }
 
                 return labelNormalized.includes(queryNormalized)
               })
-              .filter(command => (command.shouldBeHidden ? !command.shouldBeHidden(this.editor) : true)),
+              .filter((command) =>
+                command.shouldBeHidden ? !command.shouldBeHidden(this.editor) : true
+              )
           }))
 
-          const withoutEmptyGroups = withFilteredCommands.filter(group => {
+          const withoutEmptyGroups = withFilteredCommands.filter((group) => {
             if (group.commands.length > 0) {
               return true
             }
@@ -102,12 +110,12 @@ export const SlashCommand = Extension.create({
             return false
           })
 
-          const withEnabledSettings = withoutEmptyGroups.map(group => ({
+          const withEnabledSettings = withoutEmptyGroups.map((group) => ({
             ...group,
-            commands: group.commands.map(command => ({
+            commands: group.commands.map((command) => ({
               ...command,
-              isEnabled: true,
-            })),
+              isEnabled: true
+            }))
           }))
 
           return withEnabledSettings
@@ -121,12 +129,12 @@ export const SlashCommand = Extension.create({
             onStart: (props: SuggestionProps) => {
               component = new ReactRenderer(MenuList, {
                 props,
-                editor: props.editor,
+                editor: props.editor
               })
 
               const { view } = props.editor
 
-              const editorNode = view.dom as HTMLElement
+              // const editorNode = view.dom as HTMLElement
 
               const getReferenceClientRect = () => {
                 if (!props.clientRect) {
@@ -151,7 +159,7 @@ export const SlashCommand = Extension.create({
 
               scrollHandler = () => {
                 popup?.[0].setProps({
-                  getReferenceClientRect,
+                  getReferenceClientRect
                 })
               }
 
@@ -160,7 +168,7 @@ export const SlashCommand = Extension.create({
               popup?.[0].setProps({
                 getReferenceClientRect,
                 appendTo: () => document.body,
-                content: component.element,
+                content: component.element
               })
 
               popup?.[0].show()
@@ -171,7 +179,7 @@ export const SlashCommand = Extension.create({
 
               const { view } = props.editor
 
-              const editorNode = view.dom as HTMLElement
+              // const editorNode = view.dom as HTMLElement
 
               const getReferenceClientRect = () => {
                 if (!props.clientRect) {
@@ -194,15 +202,14 @@ export const SlashCommand = Extension.create({
                 return new DOMRect(rect.x, yPos, rect.width, rect.height)
               }
 
-              let scrollHandler = () => {
+              const scrollHandler = () => {
                 popup?.[0].setProps({
-                  getReferenceClientRect,
+                  getReferenceClientRect
                 })
               }
 
               view.dom.parentElement?.addEventListener('scroll', scrollHandler)
 
-              // eslint-disable-next-line no-param-reassign
               props.editor.storage[extensionName].rect = props.clientRect
                 ? getReferenceClientRect()
                 : {
@@ -211,10 +218,10 @@ export const SlashCommand = Extension.create({
                     left: 0,
                     top: 0,
                     right: 0,
-                    bottom: 0,
+                    bottom: 0
                   }
               popup?.[0].setProps({
-                getReferenceClientRect,
+                getReferenceClientRect
               })
             },
 
@@ -239,10 +246,10 @@ export const SlashCommand = Extension.create({
                 view.dom.parentElement?.removeEventListener('scroll', scrollHandler)
               }
               component.destroy()
-            },
+            }
           }
-        },
-      }),
+        }
+      })
     ]
   },
 
@@ -254,10 +261,10 @@ export const SlashCommand = Extension.create({
         left: 0,
         top: 0,
         right: 0,
-        bottom: 0,
-      },
+        bottom: 0
+      }
     }
-  },
+  }
 })
 
 export default SlashCommand

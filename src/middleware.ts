@@ -1,4 +1,3 @@
-import { isEmpty } from 'lodash'
 import { NextResponse, NextRequest } from 'next/server'
 
 const isTokenExpired = (token: string) => {
@@ -24,7 +23,7 @@ export async function middleware(request: NextRequest) {
       return response
     }
   }
-  if ((isPrivatePath && isEmpty(token)) || (isPrivatePath && token && isTokenExpired(token))) {
+  if ((isPrivatePath && !token) || (isPrivatePath && token && isTokenExpired(token))) {
     return NextResponse.redirect(new URL(`/login?redirect=${path}`, request.nextUrl))
   }
 

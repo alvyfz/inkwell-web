@@ -7,7 +7,6 @@ import { memo, useEffect, useState } from 'react'
 import * as Popover from '@radix-ui/react-popover'
 import { Surface } from '@/components/ui/Surface'
 import { ColorPicker } from '@/components/panels'
-import { FontFamilyPicker } from './components/FontFamilyPicker'
 import { FontSizePicker } from './components/FontSizePicker'
 import { useTextmenuContentTypes } from './hooks/useTextmenuContentTypes'
 import { ContentTypePicker } from './components/ContentTypePicker'
@@ -54,6 +53,7 @@ export const TextMenu = ({ editor }: TextMenuProps) => {
     return () => {
       controller.abort()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

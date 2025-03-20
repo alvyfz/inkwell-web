@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { useForm } from '@mantine/form'
 
-import { useOrientation } from 'react-haiku'
+import useOrientation from '@/hooks/useOrientation'
 
 import Link from 'next/link'
 import { Button, Input } from '@heroui/react'

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { WebSocketStatus } from '@hocuspocus/provider'
 import { memo } from 'react'
 import { EditorUser } from '../types'
