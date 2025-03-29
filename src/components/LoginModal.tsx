@@ -25,11 +25,11 @@ export default function LoginModal({
         <div className="p-6">
           {action === "login" ? (
             <h1 className="text-2xl font-medium text-primary font-serif text-center">
-              Welcome bact to <span className="font-brand font-bold">Inkwell.</span>
+              Welcome bact to <span className="font-brand font-bold">Inkwells.</span>
             </h1>
           ) : (
             <h1 className="text-2xl font-medium text-primary font-serif text-center">
-              Join to <span className="font-brand font-bold">Inkwell.</span>
+              Join to <span className="font-brand font-bold">Inkwells.</span>
             </h1>
           )}
 

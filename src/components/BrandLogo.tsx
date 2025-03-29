@@ -9,7 +9,7 @@ export const BrandLogo = ({
 }) => (
   <div className={className}>
     <h1 style={{ fontSize: size }} className={`text-${color} font-brand font-bold  ]`}>
-      Inkwell.
+      Inkwells.
     </h1>
   </div>
 )
