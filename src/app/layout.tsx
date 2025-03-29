@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Barlow, Geist_Mono, Noto_Serif, Headland_One } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
+import { isDevEnv } from '@/helpers/utils'
 
 const body = Barlow({
   display: 'swap',
@@ -46,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${body.variable} ${mono.variable} ${serif.variable} ${brand.variable} antialiased debug-screens`}
+        className={`${body.variable} ${mono.variable} ${serif.variable} ${brand.variable} antialiased ${isDevEnv ? 'debug-screens' : ''}`}
       >
         <Providers>{children}</Providers>
       </body>

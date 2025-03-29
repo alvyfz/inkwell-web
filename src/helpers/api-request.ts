@@ -53,15 +53,14 @@ export const findJsonInString = (string: any) => {
 
 const requestResource = async (
   method: 'GET' | 'POST' | 'PUT' | 'PATCH',
-  path: string,
+  url: string,
   data?: { params?: any; headers?: any },
   timeout?: number
 ) => {
-  const url = `${path}${
-    method === 'GET' && data?.params ? `?${new URLSearchParams(data.params)}` : ''
-  }`
+  const _url = `${url}${method === 'GET' && data?.params ? `?${new URLSearchParams(data.params)}` : ''
+    }`
   try {
-    const res = await request(method, url, data, timeout)
+    const res = await request(method, _url, data, timeout)
     if (res.status === 200) {
       return res.data
     } else {
@@ -72,7 +71,7 @@ const requestResource = async (
       }
     }
   } catch (err: any) {
-    console.log(`API ${path} ERROR: `, err)
+    console.log(`API ${_url} ERROR: `, err)
     // const parseError = findJsonInString(err as any);
     return {
       isSuccess: false,
