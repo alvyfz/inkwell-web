@@ -90,7 +90,7 @@ export default function NewStory() {
   }
 
   return (
-    <div className="h-screen overflow-y-hidden">
+    <div className="min-h-screen">
       <ClientNavbar
         hiddenWriteButton
         navbarEndContent={
