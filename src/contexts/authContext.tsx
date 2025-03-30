@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, ReactNode, useCallback, useEffect } from 'react'
 import Cookies from 'js-cookie'
+import { usePathname } from 'next/navigation'
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
@@ -10,6 +11,8 @@ type AuthContextType = {
 }
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const pathname = usePathname()
+
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -22,7 +25,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } else {
       setUser(null)
     }
-  }, [children])
+  }, [pathname, children])
 
   const logout = useCallback(() => {
     setUser(null)

@@ -66,7 +66,7 @@ export const ClientNavbar = ({
         {!user && (
           <>
             <Button as={Link} href={`/signup?redirect=${pathname}`} color="primary" size="sm">
-              Login
+              Signup
             </Button>
             <Button
               as={Link}
