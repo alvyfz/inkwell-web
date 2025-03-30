@@ -39,7 +39,7 @@ export default function VerifyForgotPassword() {
       password: (value) =>
         isValidPassword(value)
           ? null
-          : 'Minimum eight characters, at least one uppercase letter, one lowercase letter and one number'
+          : 'Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character'
     }
   })
 
