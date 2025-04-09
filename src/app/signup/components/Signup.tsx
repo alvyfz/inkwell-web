@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 import { useForm } from '@mantine/form'
 import toast from '@/helpers/toast'
@@ -12,6 +12,7 @@ import { PATH_API } from '@/helpers/api-uri'
 import { requestAPI } from '@/helpers/api-request'
 import { BrandLogo } from '@/components/BrandLogo'
 import { isValidEmail, isValidPassword } from '@/helpers/utils'
+import { isEmpty } from 'lodash'
 
 type SignupFormType = {
   email: string
@@ -24,7 +25,10 @@ export default function Signup() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const orientation = useOrientation()
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get('redirect') as string
   const isPortrait = orientation === 'portrait'
+
   const form = useForm({
     initialValues: {
       email: '',
@@ -58,7 +62,11 @@ export default function Signup() {
       if (!response.isSuccess) {
         toast.error(response.message)
       } else {
-        router.push(`/signup/verify-email?email=${form.values.email}`)
+        router.push(
+          `/signup/verify-email?email=${form.values.email}${
+            !isEmpty(redirect) ? `&redirect=${redirect}` : ''
+          }`
+        )
       }
       setIsLoading(false)
     }

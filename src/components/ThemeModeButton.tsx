@@ -4,9 +4,11 @@ import React from 'react'
 import { useTheme } from 'next-themes'
 
 export default function ThemeModeButton({
-  variant = 'solid'
+  variant = 'solid',
+  className = ''
 }: {
   variant?: 'flat' | 'light' | 'solid' | 'bordered' | 'faded' | 'shadow' | 'ghost' | undefined
+  className?: string
 }) {
   const { theme, setTheme } = useTheme()
   const isDark = theme === 'dark'
@@ -16,7 +18,7 @@ export default function ThemeModeButton({
       isIconOnly
       aria-label="theme-mode"
       onPress={() => setTheme(isDark ? 'light' : 'dark')}
-      className="m-4"
+      className={className}
       color="primary"
       variant={variant}
     >

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 import { useForm } from '@mantine/form'
 import toast from '@/helpers/toast'
@@ -13,6 +13,7 @@ import Cookies from 'js-cookie'
 import { decodeJwt, isValidEmail } from '@/helpers/utils'
 import { BrandLogo } from '@/components/BrandLogo'
 import useOrientation from '@/hooks/useOrientation'
+import { isEmpty } from 'lodash'
 
 type LoginFormType = {
   email: string
@@ -22,6 +23,8 @@ type LoginFormType = {
 export default function Login() {
   const orientation = useOrientation()
   const isPortrait = orientation === 'portrait'
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get('redirect') as string
 
   const router = useRouter()
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -50,7 +53,9 @@ export default function Login() {
       if (!response.isSuccess) {
         if (response.code === 402) {
           toast.error('Please verify your email first.')
-          router.replace('/signup/verify-email?email=' + values.email)
+          router.replace(
+            `/signup/verify-email?email=${values.email}${!isEmpty(redirect) ? `&redirect=${redirect}` : ''}`
+          )
         } else {
           toast.error(response.message)
         }
@@ -61,7 +66,11 @@ export default function Login() {
           secure: true,
           path: '/'
         })
-        router.replace('/app')
+        if (isEmpty(redirect)) {
+          router.replace('/app')
+        } else {
+          router.replace(redirect)
+        }
       }
       setIsLoading(false)
     }

@@ -17,6 +17,7 @@ export default function SignupVerifyEmail() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const email = searchParams.get('email') as string
+  const redirect = searchParams.get('redirect') as string
 
   const [otp, setOtp] = useState('')
   const [requestAction, setRequestAction] = useState('initial')
@@ -55,7 +56,11 @@ export default function SignupVerifyEmail() {
         secure: true,
         path: '/'
       })
-      router.push('/app')
+      if (!isEmpty(redirect)) {
+        router.push(redirect)
+      } else {
+        router.push('/app')
+      }
     } else {
       toast.error(response.message)
     }

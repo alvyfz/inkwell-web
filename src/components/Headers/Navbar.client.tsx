@@ -38,7 +38,7 @@ export const ClientNavbar = ({
   return (
     <Navbar shouldHideOnScroll maxWidth="full" isBordered>
       <NavbarBrand>
-        <Link href="/">
+        <Link href="/app">
           <BrandLogo size={30} />
         </Link>
       </NavbarBrand>
@@ -47,7 +47,7 @@ export const ClientNavbar = ({
           {navbarContent}
         </NavbarContent>
       )}
-      <NavbarContent as="div" className="items-center gap-1" justify="end">
+      <NavbarContent as="div" className="items-center gap-4" justify="end">
         {navbarEndContent}
         {!hiddenWriteButton && (
           <Button
@@ -62,10 +62,16 @@ export const ClientNavbar = ({
             Write
           </Button>
         )}
-        <ThemeModeButton variant="light" />
+        <ThemeModeButton variant="light" className="hidden sm:flex" />
         {!user && (
           <>
-            <Button as={Link} href={`/signup?redirect=${pathname}`} color="primary" size="sm">
+            <Button
+              className="hidden sm:flex"
+              as={Link}
+              href={`/signup?redirect=${pathname}`}
+              color="primary"
+              size="sm"
+            >
               Signup
             </Button>
             <Button
