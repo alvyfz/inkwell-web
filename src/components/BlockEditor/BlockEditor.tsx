@@ -38,8 +38,8 @@ export const BlockEditor = ({
   }
 
   return (
-    <div className="flex h-screen w-full" ref={menuContainerRef}>
-      <div className="relative flex flex-col flex-1 h-full overflow-hidden">
+    <div ref={menuContainerRef}>
+      <div className="relative flex flex-col flex-1 h-full  ">
         <EditorContent editor={editor} className="flex-1" />
         <LinkMenu editor={editor} appendTo={menuContainerRef} />
         <TextMenu editor={editor} />

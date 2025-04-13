@@ -8,12 +8,14 @@ type AuthContextType = {
   user: any
   setUser: (user: any) => void
   logout: () => void
+  isLoggedIn: boolean | null
 }
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname()
 
   const [user, setUser] = useState(null)
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null)
 
   useEffect(() => {
     const token = Cookies.get('Authorization') as string
@@ -22,7 +24,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const decodedToken = JSON.parse(atob(token.split('.')[1]))
 
       setUser(decodedToken)
+      setIsLoggedIn(true)
     } else {
+      setIsLoggedIn(false)
       setUser(null)
     }
   }, [pathname, children])
@@ -33,7 +37,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, setUser, logout } as AuthContextType}>
+    <AuthContext.Provider value={{ user, setUser, logout, isLoggedIn } as AuthContextType}>
       {children}
     </AuthContext.Provider>
   )
