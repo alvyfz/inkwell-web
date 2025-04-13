@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import Login from './components/login'
 import type { Metadata } from 'next'
@@ -8,5 +8,9 @@ export const metadata: Metadata = {
 }
 
 export default function LoginPage() {
-  return <Login />
+  return (
+    <Suspense>
+      <Login />
+    </Suspense>
+  )
 }
