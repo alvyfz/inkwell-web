@@ -3,7 +3,7 @@
 
 import { requestAPI } from '@/helpers/api-request'
 import { PATH_API } from '@/helpers/api-uri'
-import { Alert, Autocomplete, AutocompleteItem, Button, Chip, Input } from '@heroui/react'
+import { Alert, Autocomplete, AutocompleteItem, Button, Chip, Input, Textarea } from '@heroui/react'
 import { useForm } from '@mantine/form'
 import { isEmpty } from 'lodash'
 import useSWR from 'swr'
@@ -23,6 +23,8 @@ type PublishStoryType = {
   searchTopic: string
   selectedTopics: any[]
   selectedTopicsIds: string[]
+  title: string
+  description: string
 }
 
 export default function PublishStory({ onClose }: { onClose: () => void }) {
@@ -40,11 +42,15 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
       cover: '',
       searchTopic: '',
       selectedTopics: [],
-      selectedTopicsIds: []
+      selectedTopicsIds: [],
+      title: '',
+      description: ''
     } as PublishStoryType,
     validate: {
       selectedTopicsIds: (value) => (value.length < 4 ? 'Topics must be at least 5' : null),
-      cover: (value) => (isEmpty(value) ? 'Story cover cannot be empty' : null)
+      cover: (value) => (isEmpty(value) ? 'Story cover cannot be empty' : null),
+      title: (value) => (isEmpty(value) ? 'Story title cannot be empty' : null),
+      description: (value) => (isEmpty(value) ? 'Story description cannot be empty' : null)
     }
   })
 
@@ -67,11 +73,27 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
 
   const publishArticle = useSWRMutation(
     PATH_API.ARTICLE_PUBLISH,
-    (url, { arg }: { arg: { topicIds: string[]; coverImage: string } }) =>
+    (
+      url,
+      {
+        arg
+      }: {
+        arg: {
+          topicIds: string[]
+          coverImage: string
+          title: string
+          description: string
+          status: 'unpublished' | 'published'
+        }
+      }
+    ) =>
       requestAPI.post(url, {
         params: {
           topicIds: arg.topicIds,
-          coverImage: arg.coverImage
+          coverImage: arg.coverImage,
+          title: arg.title,
+          description: arg.description,
+          status: arg.status
         }
       })
   )
@@ -184,21 +206,26 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
     }
   }
 
-  const onPublish = async (values: PublishStoryType) => {
+  const onPublish = async (values: PublishStoryType, e: any) => {
+    const buttonName = e.nativeEvent.submitter.name
+
     if (form.isValid()) {
       try {
         const trigger = await publishArticle.trigger({
           topicIds: values.selectedTopicsIds,
-          coverImage: values.cover
+          coverImage: values.cover,
+          title: values.title,
+          description: values.description,
+          status: buttonName === 'publish' ? 'published' : 'unpublished'
         })
 
         if (trigger.isSuccess) {
           setShowError({
             title: 'Success',
-            desc: 'Story published.',
+            desc: 'Story saved to unpublish.',
             color: 'success'
           })
-          toast.success('Story published.')
+          toast.success('Story saved to unpublish.')
           onClose()
           router.replace('/app')
         } else {
@@ -230,10 +257,34 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
         />
       )}
       <form
-        onSubmit={form.onSubmit((values) => onPublish(values))}
-        className="flex flex-col md:flex-row gap-6"
+        onSubmit={form.onSubmit((values, e) => onPublish(values, e))}
+        className="grid grid-cols-1 md:grid-cols-2 gap-4"
       >
-        <section className="flex-1 flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
+          <h1 className="font-medium">Title</h1>
+          <Input
+            label="Title"
+            placeholder="Type your story title"
+            {...form.getInputProps('title')}
+            errorMessage={form.errors.title}
+            isInvalid={!!form.errors.title}
+            variant="bordered"
+          />
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <h1 className="font-medium">Description</h1>
+          <Textarea
+            label="Description"
+            placeholder="Type your story description"
+            {...form.getInputProps('description')}
+            errorMessage={form.errors.description}
+            isInvalid={!!form.errors.description}
+            variant="bordered"
+            minRows={1}
+          />
+        </div>
+        <div className="flex flex-col gap-4">
           <h1 className="font-medium">Story Cover</h1>
           <Input
             type="file"
@@ -264,8 +315,9 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
               />
             </div>
           )}
-        </section>
-        <section className="flex-1 flex flex-col gap-4">
+        </div>
+
+        <div className="flex flex-col gap-4">
           <h1 className="font-medium">Story Topics</h1>
 
           <Autocomplete
@@ -340,17 +392,28 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
               </Chip>
             ))}
           </div>
-          <div className="my-20 flex flex-row justify-end">
+
+          <div className="my-20 flex flex-row justify-end gap-4">
             <Button
+              name="draft"
               className="w-fit "
               type="submit"
               color="secondary"
               isLoading={publishArticle.isMutating}
             >
+              Save to Draft
+            </Button>
+            <Button
+              name="publish"
+              className="w-fit "
+              type="submit"
+              color="primary"
+              isLoading={publishArticle.isMutating}
+            >
               Publish Now
             </Button>
           </div>
-        </section>
+        </div>
       </form>
     </div>
   )

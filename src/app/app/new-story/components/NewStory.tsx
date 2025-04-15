@@ -7,7 +7,7 @@ import { useGlobalState } from '@/contexts/globalContext'
 import { requestAPI } from '@/helpers/api-request'
 import { PATH_API } from '@/helpers/api-uri'
 import toast from '@/helpers/toast'
-import { Button, Input, Spinner } from '@heroui/react'
+import { Button, Spinner } from '@heroui/react'
 import { useForm } from '@mantine/form'
 import { isEmpty } from 'lodash'
 import { useCallback, useEffect } from 'react'
@@ -16,7 +16,6 @@ import useSWR from 'swr'
 import PublishStory from './PublishStory'
 
 type StoryType = {
-  title: string
   html: string
 }
 
@@ -25,11 +24,9 @@ export default function NewStory() {
 
   const form = useForm({
     initialValues: {
-      title: '',
       html: ''
     } as StoryType,
     validate: {
-      title: (value) => (value.length > 3 ? null : 'Title must be at least 3 characters'),
       html: (value) => (isEmpty(value) ? 'Story content cannot be empty' : null)
     }
   })
@@ -38,7 +35,6 @@ export default function NewStory() {
 
   useEffect(() => {
     if (!isLoading && !!data?.isSuccess) {
-      form.setFieldValue('title', data.payload.title)
       form.setFieldValue('html', data.payload.content)
     }
   }, [data])
@@ -46,11 +42,10 @@ export default function NewStory() {
   const debounceValue = useDebounce(form.values.html, 10000)
 
   const saveDraft = useCallback(async () => {
-    const { title, html } = form.values
-    if (!isEmpty(title) && !isEmpty(html)) {
+    const { html } = form.values
+    if (!isEmpty(html)) {
       const response = await requestAPI.post(PATH_API.ARTICLE_DRAFT, {
         params: {
-          title: title,
           content: html
         }
       })
@@ -100,16 +95,6 @@ export default function NewStory() {
         }
       />
       <div className="font-serif">
-        <div className="caret-black dark:caret-white outline-0 pr-2 pl-2 pt-4 z-0  lg:pl-8 lg:pr-8 mx-auto max-w-2xl">
-          <Input
-            size="lg"
-            {...form.getInputProps('title')}
-            variant="underlined"
-            placeholder="Title"
-            errorMessage={form.errors.title}
-            isInvalid={!!form.errors.title}
-          />
-        </div>
         <BlockEditor
           initial={data.payload?.content || ''}
           setHtml={(html) => form.setFieldValue('html', html)}
