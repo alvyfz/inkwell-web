@@ -101,6 +101,7 @@ export const ClientNavbar = ({
                     color="secondary"
                     name={user?.name}
                     src={user?.avatar}
+                    size="sm"
                   />
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Profile Actions" variant="flat">
