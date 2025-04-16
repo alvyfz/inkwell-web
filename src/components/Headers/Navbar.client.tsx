@@ -18,7 +18,6 @@ import { useAuth } from '@/contexts/authContext'
 import ThemeModeButton from '../ThemeModeButton'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { usePathname } from 'next/navigation'
-import { useTheme } from 'next-themes'
 
 export const ClientNavbar = ({
   navbarContent,
