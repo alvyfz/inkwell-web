@@ -3,8 +3,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
-import { BrandLogo } from '@/components/BrandLogo'
-import { Input } from '@heroui/react'
+import { Image, Input } from '@heroui/react'
 import { requestAPI } from '@/helpers/api-request'
 import { PATH_API } from '@/helpers/api-uri'
 import toast from '@/helpers/toast'
@@ -70,7 +69,13 @@ export default function SignupVerifyEmail() {
   return (
     <div className="overflow-hidden flex flex-col h-screen w-screen">
       <div className="flex flex-row justify-center   ">
-        <BrandLogo color={'white'} size={80} className={'py-8'} />
+        <Image
+          src={'/brand/brand-full-white.png'}
+          height={80}
+          alt="brand"
+          radius="none"
+          className="my-8"
+        />{' '}
       </div>
 
       <div

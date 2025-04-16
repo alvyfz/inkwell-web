@@ -26,7 +26,7 @@ export default function PublishedPage() {
           ))}
         </div>
       ) : (
-        <p className="text-gray-500">You have no drafts yet.</p>
+        <p className="text-gray-500">You have no published yet.</p>
       )}
     </>
   )

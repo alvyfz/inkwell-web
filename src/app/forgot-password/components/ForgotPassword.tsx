@@ -7,10 +7,9 @@ import { useForm } from '@mantine/form'
 import useOrientation from '@/hooks/useOrientation'
 
 import Link from 'next/link'
-import { Button, Input } from '@heroui/react'
+import { Button, Image, Input } from '@heroui/react'
 import ThemeModeButton from '@/components/ThemeModeButton'
 import { Icon } from '@iconify/react'
-import { BrandLogo } from '@/components/BrandLogo'
 import toast from '@/helpers/toast'
 import { PATH_API } from '@/helpers/api-uri'
 import { requestAPI } from '@/helpers/api-request'
@@ -65,7 +64,8 @@ export default function ForgotPassword() {
         <div
           className={`${isPortrait ? 'grow  pt-8 pb-4' : 'w-[50%] '} flex flex-col items-center justify-center  text-white h-full  `}
         >
-          <BrandLogo size={80} color="white" />
+          <Image src={'/brand/brand-full-white.png'} height={80} alt="brand" radius="none" />
+
           <h3 className={isPortrait ? 'text-sm sm:text-base md:text-lg' : 'text-lg'}>
             Where Ideas Flow.
           </h3>

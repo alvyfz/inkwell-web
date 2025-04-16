@@ -10,14 +10,15 @@ import {
   Dropdown,
   DropdownMenu,
   Avatar,
-  Button
+  Button,
+  Image
 } from '@heroui/react'
-import { BrandLogo } from '../BrandLogo'
 import { ReactNode } from 'react'
 import { useAuth } from '@/contexts/authContext'
 import ThemeModeButton from '../ThemeModeButton'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { usePathname } from 'next/navigation'
+import { useTheme } from 'next-themes'
 
 export const ClientNavbar = ({
   navbarContent,
@@ -37,10 +38,17 @@ export const ClientNavbar = ({
 
   return (
     <Navbar shouldHideOnScroll maxWidth="full" isBordered>
-      <NavbarBrand>
-        <Link href="/app">
-          <BrandLogo size={40} />
-        </Link>
+      <NavbarBrand as={Link} href="/app">
+        <div className="p-1 bg-white rounded-md ">
+          <Image
+            src={'/brand/brand.svg'}
+            height={40}
+            style={{ color: 'red' }}
+            width={'auto'}
+            alt="brand"
+            radius="none"
+          />
+        </div>
       </NavbarBrand>
       {navbarContent && (
         <NavbarContent className={navbarContentClassName} justify={navbarContentJustify}>
@@ -57,9 +65,7 @@ export const ClientNavbar = ({
                 href={!!user ? '/app/new-story' : '/login?redirect=/app/new-story'}
                 variant="light"
                 color="primary"
-                size="sm"
                 startContent={<Icon icon="ic:outline-create" />}
-                className="text-base"
               >
                 Write
               </Button>
@@ -72,7 +78,6 @@ export const ClientNavbar = ({
                   as={Link}
                   href={`/signup?redirect=${pathname}`}
                   color="primary"
-                  size="sm"
                 >
                   Signup
                 </Button>
@@ -81,7 +86,6 @@ export const ClientNavbar = ({
                   href={`/login?redirect=${pathname}`}
                   variant="light"
                   color="primary"
-                  size="sm"
                 >
                   Login
                 </Button>
@@ -96,7 +100,6 @@ export const ClientNavbar = ({
                     className="transition-transform"
                     color="secondary"
                     name={user?.name}
-                    size="sm"
                     src={user?.avatar}
                   />
                 </DropdownTrigger>

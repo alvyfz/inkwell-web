@@ -6,11 +6,10 @@ import React, { useState } from 'react'
 import { useForm } from '@mantine/form'
 import toast from '@/helpers/toast'
 import useOrientation from '@/hooks/useOrientation'
-import { Button, Input } from '@heroui/react'
+import { Button, Image, Input } from '@heroui/react'
 import ThemeModeButton from '@/components/ThemeModeButton'
 import { PATH_API } from '@/helpers/api-uri'
 import { requestAPI } from '@/helpers/api-request'
-import { BrandLogo } from '@/components/BrandLogo'
 import { isValidEmail, isValidPassword } from '@/helpers/utils'
 import { isEmpty } from 'lodash'
 
@@ -86,7 +85,13 @@ export default function Signup() {
           <h6 className={isPortrait ? 'text-sm sm:text-base md:text-lg' : 'text-lg'}>
             Hi! Welcome to
           </h6>
-          <BrandLogo color={'white'} size={80} className={'py-8'} />
+          <Image
+            src={'/brand/brand-full-white.png'}
+            height={80}
+            alt="brand"
+            radius="none"
+            className="my-8"
+          />{' '}
           <h6 className={isPortrait ? 'text-base sm:text-lg md:text-xl' : 'text-xl'}>
             Where Ideas Flow.
           </h6>

@@ -38,12 +38,21 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next()
 }
 
-export const config = {
-  matcher: ['/app', '/login', '/signup', '/app/new-story']
-}
+export const config = {}
 
-const publicPath = ['/login', '/signup']
+const publicPath = [
+  '/login',
+  '/signup',
+  '/signup/verify-email',
+  '/forgot-password',
+  '/forgot-password/verify'
+]
 
-const privatePath = ['/app/new-story']
+const privatePath = [
+  '/app/new-story, /app/me',
+  '/app/me/stories',
+  '/app/me/stories/drafts',
+  '/app/me/stories/published'
+]
 
 const hybridPath = ['/app']

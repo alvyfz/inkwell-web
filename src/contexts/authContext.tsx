@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, ReactNode, useCallback, useEffect } from 'react'
 import Cookies from 'js-cookie'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
@@ -13,6 +13,7 @@ type AuthContextType = {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname()
+  const router = useRouter()
 
   const [user, setUser] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null)
@@ -34,6 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = useCallback(() => {
     setUser(null)
     Cookies.remove('Authorization')
+    router.refresh()
   }, [])
 
   return (
