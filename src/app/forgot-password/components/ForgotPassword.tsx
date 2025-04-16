@@ -65,7 +65,7 @@ export default function ForgotPassword() {
         <div
           className={`${isPortrait ? 'grow  pt-8 pb-4' : 'w-[50%] '} flex flex-col items-center justify-center  text-white h-full  `}
         >
-          <BrandLogo size={60} color="white" />
+          <BrandLogo size={80} color="white" />
           <h3 className={isPortrait ? 'text-sm sm:text-base md:text-lg' : 'text-lg'}>
             Where Ideas Flow.
           </h3>

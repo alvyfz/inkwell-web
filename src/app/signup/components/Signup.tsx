@@ -86,7 +86,7 @@ export default function Signup() {
           <h6 className={isPortrait ? 'text-sm sm:text-base md:text-lg' : 'text-lg'}>
             Hi! Welcome to
           </h6>
-          <BrandLogo color={'white'} size={60} className={'py-8'} />
+          <BrandLogo color={'white'} size={80} className={'py-8'} />
           <h6 className={isPortrait ? 'text-base sm:text-lg md:text-xl' : 'text-xl'}>
             Where Ideas Flow.
           </h6>

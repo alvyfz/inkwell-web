@@ -83,7 +83,7 @@ export default function VerifyForgotPassword() {
   return (
     <div className=" flex flex-col h-screen w-screen">
       <div className="flex flex-row justify-center   ">
-        <BrandLogo color={'white'} size={60} className={'py-8'} />
+        <BrandLogo color={'white'} size={80} className={'py-8'} />
       </div>
 
       <div

@@ -39,7 +39,7 @@ export const ClientNavbar = ({
     <Navbar shouldHideOnScroll maxWidth="full" isBordered>
       <NavbarBrand>
         <Link href="/app">
-          <BrandLogo size={30} />
+          <BrandLogo size={40} />
         </Link>
       </NavbarBrand>
       {navbarContent && (

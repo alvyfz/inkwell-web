@@ -1,15 +1,26 @@
+'use client'
+
+import { Image } from '@heroui/react'
+import { useTheme } from 'next-themes'
+
 export const BrandLogo = ({
-  size = 18,
-  color = 'primary',
-  className = ''
+  size = 20,
+  className = '',
+  color
 }: {
   size?: number
-  color?: string
+  color?: 'black' | 'white'
   className?: string
-}) => (
-  <div className={className}>
-    <h1 style={{ fontSize: size }} className={`text-${color} font-brand font-bold  ]`}>
-      Inkwells.
-    </h1>
-  </div>
-)
+}) => {
+  const { theme } = useTheme()
+  const typeTheme = theme === 'dark' ? 'white' : 'black'
+  const type = color ?? typeTheme
+
+  return (
+    <div className={`${className}`}>
+      {type && (
+        <Image src={`/brand/brand-full-${type}.png`} height={size} alt="brand" radius="none" />
+      )}
+    </div>
+  )
+}
