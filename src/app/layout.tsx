@@ -33,7 +33,7 @@ const mono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     template: '%s | Inkwells',
-    default: 'Inkwells' // a default is required when creating a template
+    default: 'Inkwells'
   },
   description:
     'Inkwells is a platform for writing, reading, and sharing ideas. Find inspiring stories, share your thoughts, and join a community of passionate writers and readers.'

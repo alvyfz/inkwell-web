@@ -105,14 +105,13 @@ export const ClientNavbar = ({
                     <p className="font-semibold">Signed in as</p>
                     <p className="font-semibold">{user?.email}</p>
                   </DropdownItem>
-                  <DropdownItem as={Link} href="/profile" key="settings">
-                    My Settings
-                  </DropdownItem>
-                  <DropdownItem key="team_settings">Team Settings</DropdownItem>
-                  <DropdownItem key="analytics">Analytics</DropdownItem>
-                  <DropdownItem key="system">System</DropdownItem>
-                  <DropdownItem key="configurations">Configurations</DropdownItem>
-                  <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
+
+                  {user && (
+                    <DropdownItem as={Link} href="/app/me/stories" key="stories">
+                      My Stories
+                    </DropdownItem>
+                  )}
+
                   <DropdownItem key="logout" color="danger" onPress={logout}>
                     Log Out
                   </DropdownItem>

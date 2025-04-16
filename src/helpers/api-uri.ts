@@ -7,6 +7,7 @@ export enum PATH_API {
   FILE = '/files',
   ARTICLE_DRAFT = '/articles/draft',
   ARTICLE_PUBLISH = '/articles/publish',
+  ARTICLE_MY_LIST = '/articles/my-list',
   ALL_TOPIC = '/topics/all',
   TOPIC = '/topics'
 }

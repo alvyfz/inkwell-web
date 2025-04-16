@@ -56,7 +56,9 @@ export default function ForgotPassword() {
   return orientation ? (
     <div className="w-screen h-screen bg-black overflow-hidden">
       <div className="fixed right-0 top-0 z-index-50">
-        <ThemeModeButton />
+        <div className="m-4">
+          <ThemeModeButton />
+        </div>
       </div>
 
       <div className={`flex h-screen ${isPortrait ? 'flex-col' : 'flex-row'} `}>

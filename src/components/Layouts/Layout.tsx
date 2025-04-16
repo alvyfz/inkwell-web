@@ -10,9 +10,10 @@ export default function Layout({
   navbarContent,
   navbarContentClassName,
   navbarContentJustify,
-  hiddenWriteButton
+  hiddenWriteButton,
+  headerContent
 }: {
-  children: React.ReactNode
+  children: ReactNode
   isLoading?: boolean
   screenClassName?: string
   className?: string
@@ -21,15 +22,25 @@ export default function Layout({
   navbarContentClassName?: string
   navbarContentJustify?: 'center' | 'start' | 'end' | undefined
   hiddenWriteButton?: boolean
+  headerContent?: ReactNode
 }) {
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <ClientNavbar
         navbarContent={navbarContent}
         navbarContentClassName={navbarContentClassName}
         navbarContentJustify={navbarContentJustify}
         hiddenWriteButton={hiddenWriteButton}
       />
+      {headerContent ? (
+        <div className="border-b bg-content1 w-screen flex flex-row justify-center">
+          <div
+            className={`flex flex-col w-full h-full max-w-[1336px] ${!isNoSpacing ? 'px-4 sm:px-8 md:px-12 xl:px-16' : ''} ${className}`}
+          >
+            {headerContent}
+          </div>
+        </div>
+      ) : null}
       <div className={`flex flex-row min-h-screen justify-center ${screenClassName}`}>
         <div
           className={`flex flex-col w-full h-full max-w-[1336px] ${!isNoSpacing ? 'px-4 sm:px-8 md:px-12 xl:px-16' : ''} ${className}`}
