@@ -5,6 +5,7 @@ export enum PATH_API {
   SEND_OTP = '/users/send-otp',
   VERIFY_EMAIL = '/users/verify-email',
   ME = '/users/me',
+  USERNAME_VALIDATION = '/users/username-validation',
 
   // FILES
   FILE = '/files',

@@ -2,27 +2,30 @@
 
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from '@mantine/form'
 import toast from '@/helpers/toast'
 import useOrientation from '@/hooks/useOrientation'
-import { Button, Image, Input } from '@heroui/react'
+import { Button, Image, Input, Spinner } from '@heroui/react'
 import ThemeModeButton from '@/components/ThemeModeButton'
 import { PATH_API } from '@/helpers/api-uri'
 import { requestAPI } from '@/helpers/api-request'
-import { isValidEmail, isValidPassword } from '@/helpers/utils'
+import { isValidEmail, isValidPassword, isValidUsername } from '@/helpers/utils'
 import { isEmpty } from 'lodash'
+import { useDebounce } from 'react-haiku'
 
 type SignupFormType = {
   email: string
   name: string
   password: string
   password2: string
+  username: string
 }
 
 export default function Signup() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [usernameForm, setUsernameForm] = useState<any>({ isFocus: false })
   const orientation = useOrientation()
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect') as string
@@ -30,12 +33,14 @@ export default function Signup() {
 
   const form = useForm({
     initialValues: {
+      username: '',
       email: '',
       name: '',
       password: '',
       password2: ''
     } as SignupFormType,
     validate: {
+      username: (value) => (isValidUsername(value) ? null : 'Invalid username'),
       email: (value) => (isValidEmail(value) ? null : 'Invalid email'),
       name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
       password2: (value, prev) => (value !== prev.password ? 'Password not same' : null),
@@ -52,6 +57,7 @@ export default function Signup() {
 
       const response = await requestAPI.post(PATH_API.SIGNUP, {
         params: {
+          username: '@' + values.username,
           email: values.email,
           name: values.name,
           password: values.password
@@ -70,6 +76,40 @@ export default function Signup() {
       setIsLoading(false)
     }
   }
+
+  const usernameValue = useDebounce(form.values.username, 500)
+
+  const checkUsername = async () => {
+    setUsernameForm({ ...usernameForm, isLoading: true })
+    const username = form.values.username
+
+    const response = await requestAPI.get(
+      `${PATH_API.USERNAME_VALIDATION}?username=${'@' + username}`
+    )
+    if (!response.isSuccess) {
+      form.setFieldError('username', response.message)
+    } else {
+      form.setFieldError('username', null)
+    }
+    setUsernameForm({ ...usernameForm, isLoading: false })
+  }
+
+  useEffect(() => {
+    const validateUsername = async () => {
+      if (isEmpty(usernameValue)) {
+        form.setFieldError('username', null)
+        return
+      }
+      if (!isValidUsername(usernameValue) && !isEmpty(usernameValue)) {
+        form.setFieldError('username', 'Invalid username')
+      } else {
+        form.setFieldError('username', null)
+        await checkUsername()
+      }
+    }
+    validateUsername()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usernameValue])
 
   return orientation ? (
     <div className="w-screen h-screen bg-black">
@@ -114,6 +154,23 @@ export default function Signup() {
                 size={isPortrait ? 'md' : 'lg'}
                 classNames={{ label: 'text-foreground', input: 'text-foreground' }}
                 variant="bordered"
+              />
+              <Input
+                label="Username"
+                {...form.getInputProps('username')}
+                type="text"
+                errorMessage={form.errors.username}
+                isInvalid={!!form.errors.username}
+                isRequired
+                size={isPortrait ? 'md' : 'lg'}
+                classNames={{ label: 'text-foreground', input: 'text-foreground' }}
+                variant="bordered"
+                startContent={
+                  usernameForm.isFocus || !isEmpty(form.values.username) ? <span>@</span> : null
+                }
+                onFocus={() => setUsernameForm({ ...usernameForm, isFocus: true })}
+                onBlur={() => setUsernameForm({ ...usernameForm, isFocus: false })}
+                endContent={usernameForm.isLoading ? <Spinner size="sm" /> : null}
               />
               <Input
                 label="Email Address"
