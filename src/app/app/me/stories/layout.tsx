@@ -16,7 +16,7 @@ export default function StoriesLayout({ children }: { children: React.ReactNode 
   return (
     <Layout
       headerContent={
-        <div className="py-8 flex flex-col gap-4">
+        <div className="py-4 sm:py-8 flex flex-col gap-4">
           <h1 className="text-2xl font-bold">Your Stories</h1>
           <Tabs
             aria-label="Tabs"

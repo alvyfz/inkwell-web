@@ -52,13 +52,14 @@ export const findJsonInString = (string: any) => {
 }
 
 const requestResource = async (
-  method: 'GET' | 'POST' | 'PUT' | 'PATCH',
+  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
   url: string,
   data?: { params?: any; headers?: any },
   timeout?: number
 ) => {
-  const _url = `${url}${method === 'GET' && data?.params ? `?${new URLSearchParams(data.params)}` : ''
-    }`
+  const _url = `${url}${
+    method === 'GET' && data?.params ? `?${new URLSearchParams(data.params)}` : ''
+  }`
   try {
     const res = await request(method, _url, data, timeout)
     if (res.status === 200) {
@@ -90,8 +91,16 @@ const put = async (path: string, data?: { params?: any; headers?: any }, timeout
 const get = async (path: string, data?: { params?: any; headers?: any }, timeout?: number) =>
   requestResource(METHOD.GET, nextConfig?.env?.API_DOMAIN + path, data, timeout)
 
+const patch = async (path: string, data?: { params?: any; headers?: any }, timeout?: number) =>
+  requestResource(METHOD.PATCH, nextConfig?.env?.API_DOMAIN + path, data, timeout)
+
+const deleteApi = async (path: string, data?: { params?: any; headers?: any }, timeout?: number) =>
+  requestResource(METHOD.DELETE, nextConfig?.env?.API_DOMAIN + path, data, timeout)
+
 export const requestAPI = {
   post,
   put,
-  get
+  get,
+  patch,
+  delete: deleteApi
 }

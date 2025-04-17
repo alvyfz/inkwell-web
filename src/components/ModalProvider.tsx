@@ -26,6 +26,7 @@ export default function ModalProvider({ children }: Readonly<{ children: React.R
         scrollBehavior={'inside'}
         onOpenChange={onCloseChanges}
         classNames={modal?.classNames}
+        placement={modal?.placement || 'center'}
       >
         <ModalContent>
           {(onClose) => (

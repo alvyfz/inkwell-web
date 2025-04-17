@@ -11,6 +11,7 @@ export type InitialStateType = {
     hiddenClose?: boolean
     footer?: (onClose: () => void) => ReactNode
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'full'
+    placement?: 'center' | 'auto' | 'top' | 'top-center' | 'bottom' | 'bottom-center' | undefined
     classNames?: {
       modal?: string
       header?: string

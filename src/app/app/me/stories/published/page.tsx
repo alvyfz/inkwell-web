@@ -8,8 +8,9 @@ import StoryCard from '@/app/app/components/CardStory'
 import Loading from '@/components/Common/Loading'
 
 export default function PublishedPage() {
-  const { data, isLoading } = useSWR(`${PATH_API.ARTICLE_MY_LIST}?status=published`, (url) =>
-    requestAPI.get(url)
+  const { data, isLoading, mutate } = useSWR(
+    `${PATH_API.ARTICLE_MY_LIST}?status=published`,
+    (url) => requestAPI.get(url)
   )
   const drafts = useMemo(() => data?.payload, [data?.payload])
 
@@ -22,7 +23,7 @@ export default function PublishedPage() {
       {drafts?.length > 0 ? (
         <div className="space-y-4">
           {drafts?.map((draft: any) => (
-            <StoryCard key={draft?._id} draft={draft} type="published" />
+            <StoryCard key={draft?._id} draft={draft} type="published" mutate={mutate} />
           ))}
         </div>
       ) : (
