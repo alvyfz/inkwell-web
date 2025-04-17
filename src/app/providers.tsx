@@ -10,7 +10,7 @@ import ModalProvider from '@/components/ModalProvider'
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <HeroUIProvider>
-      <NextThemesProvider attribute="class" defaultTheme="light">
+      <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
         <AuthProvider>
           <GlobalProvider>
             <ToastProvider placement="bottom-center" />

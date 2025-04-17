@@ -1,8 +1,9 @@
 import { Button } from '@heroui/button'
 import React from 'react'
-import { Divider, Image } from '@heroui/react'
+import { Divider } from '@heroui/react'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
+import Image from 'next/image'
 
 export default async function Home() {
   const cookieStore = await cookies()
@@ -16,7 +17,9 @@ export default async function Home() {
           <div className=" flex flex-row justify-center ">
             <div className="flex flex-col w-full max-w-[1336px] py-2 px-4 ">
               <div className="flex flex-row justify-between">
-                <Image src={'/brand/brand-full-black'} height={40} alt="brand" radius="none" />
+                <div>
+                  <Image src={'/brand/brand-full-black.png'} height={40} alt="brand" width={120} />
+                </div>
                 {!token ? (
                   <div className="flex flex-row gap-2 items-center">
                     <Button

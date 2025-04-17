@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useState, useContext, ReactNode, useCallback, useEffect } from 'react'
 import Cookies from 'js-cookie'
 import { usePathname, useRouter } from 'next/navigation'
