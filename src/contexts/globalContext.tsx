@@ -22,6 +22,15 @@ export type InitialStateType = {
       closeButton?: string
     }
   }
+  newStory: {
+    cover: string
+    file: File | null
+    searchTopic: string
+    selectedTopics: any[]
+    selectedTopicsIds: string[]
+    title: string
+    description: string
+  }
 }
 
 export type GlobalContextType = [
@@ -36,6 +45,15 @@ const initialState: InitialStateType = {
     title: '',
     component: () => null,
     onClose: () => {}
+  },
+  newStory: {
+    file: null,
+    cover: '',
+    searchTopic: '',
+    selectedTopics: [],
+    selectedTopicsIds: [],
+    title: '',
+    description: ''
   }
 }
 

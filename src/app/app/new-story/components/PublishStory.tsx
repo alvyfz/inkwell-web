@@ -5,17 +5,18 @@ import { requestAPI } from '@/helpers/api-request'
 import { PATH_API } from '@/helpers/api-uri'
 import { Alert, Autocomplete, AutocompleteItem, Button, Chip, Input, Textarea } from '@heroui/react'
 import { useForm } from '@mantine/form'
-import { isEmpty } from 'lodash'
+import { isEmpty, set } from 'lodash'
 import useSWR from 'swr'
 import toast from '@/helpers/toast'
 import nextConfig from '../../../../../next.config'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { useDebounce } from 'react-haiku'
 import { capitalizeWords } from '@/helpers/utils'
 import { Icon } from '@iconify/react'
 import useSWRMutation from 'swr/mutation'
 import { useRouter } from 'next/navigation'
+import { useGlobalState } from '@/contexts/globalContext'
 
 type PublishStoryType = {
   cover: string
@@ -27,8 +28,19 @@ type PublishStoryType = {
   description: string
 }
 
+const initialState: PublishStoryType = {
+  file: null,
+  cover: '',
+  searchTopic: '',
+  selectedTopics: [],
+  selectedTopicsIds: [],
+  title: '',
+  description: ''
+}
+
 export default function PublishStory({ onClose }: { onClose: () => void }) {
   const router = useRouter()
+  const [state, setState] = useGlobalState()
 
   const [showError, setShowError] = useState<null | {
     title: string
@@ -37,15 +49,7 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
   }>(null)
 
   const form = useForm({
-    initialValues: {
-      file: null,
-      cover: '',
-      searchTopic: '',
-      selectedTopics: [],
-      selectedTopicsIds: [],
-      title: '',
-      description: ''
-    } as PublishStoryType,
+    initialValues: state.newStory as PublishStoryType,
     validate: {
       selectedTopicsIds: (value) => (value.length < 4 ? 'Topics must be at least 5' : null),
       cover: (value) => (isEmpty(value) ? 'Story cover cannot be empty' : null),
@@ -53,6 +57,7 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
       description: (value) => (isEmpty(value) ? 'Story description cannot be empty' : null)
     }
   })
+  console.log(state.newStory)
 
   const searchDebounce = useDebounce(form.values.searchTopic, 1000)
 
@@ -133,6 +138,11 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
       })
     }
   }, [])
+
+  useEffect(() => {
+    setState('newStory', form.values)
+    console.log(form.values)
+  }, [form.values])
 
   useEffect(() => {
     if (form.values.file) {
@@ -226,6 +236,7 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
             color: 'success'
           })
           toast.success('Story saved to unpublish.')
+          setState('newStory', initialState)
           onClose()
           router.replace('/app')
         } else {
@@ -245,6 +256,11 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
       }
     }
   }
+
+  const topicNames = useMemo(
+    () => form.values.selectedTopics.map((v) => v?.name?.toLowerCase()),
+    [form.values.selectedTopics]
+  )
 
   return (
     <div>
@@ -269,6 +285,7 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
             errorMessage={form.errors.title}
             isInvalid={!!form.errors.title}
             variant="bordered"
+            style={{ fontSize: '16px' }}
           />
         </div>
 
@@ -282,6 +299,7 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
             isInvalid={!!form.errors.description}
             variant="bordered"
             minRows={1}
+            style={{ fontSize: '16px' }}
           />
         </div>
         <div className="flex flex-col gap-4">
@@ -303,6 +321,7 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
             errorMessage={form.errors.cover}
             isInvalid={!!form.errors.cover}
             variant={'bordered'}
+            style={{ fontSize: '16px' }}
           />
           {form?.values?.cover && (
             <div className="relative w-full h-[200px]">
@@ -343,10 +362,12 @@ export default function PublishStory({ onClose }: { onClose: () => void }) {
                   'Please type minimum 3 characters'
                 ) : (
                   <>
-                    <p>Can&apos;t find any topics</p>
-                    <Button variant="light" fullWidth onPress={onCreateNewTopic}>
-                      Create new topic: {capitalizeWords(form.values.searchTopic)}
-                    </Button>
+                    <p className="text-foreground">Can&apos;t find any topics</p>
+                    {!topicNames.includes(form.values.searchTopic.toLowerCase()) && (
+                      <Button variant="light" color="primary" fullWidth onPress={onCreateNewTopic}>
+                        Create new topic: {capitalizeWords(form.values.searchTopic)}
+                      </Button>
+                    )}
                   </>
                 )
             }}

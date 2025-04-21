@@ -20,7 +20,12 @@ export const useUploader = ({ onUpload }: { onUpload: (url: string) => void }) =
           }
         })
         const id = upload.payload
-        onUpload(nextConfig?.env?.APPWRITE_STORAGE_ENDPOINT?.replace('<id>', id) as string)
+        if (upload.isSuccess && id) {
+          onUpload(nextConfig?.env?.APPWRITE_STORAGE_ENDPOINT?.replace('<id>', id) as string)
+        } else {
+          const error = upload?.message || 'Something went wrong'
+          toast.error(error)
+        }
       } catch (errPayload: any) {
         const error = errPayload?.message || 'Something went wrong'
         toast.error(error)

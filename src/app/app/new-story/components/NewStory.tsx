@@ -75,10 +75,11 @@ export default function NewStory() {
     setState('modal', {
       visible: true,
       title: 'Publish Story',
-      size: 'full',
+      placement: 'auto',
+      size: '5xl',
       classNames: {
-        base: 'md:px-[10%] xl:px-[20%] 2xl:px-[30%]',
-        closeButton: 'md:mr-[10%] xl:mr-[20%] 2xl:mr-[30%] text-xl'
+        // base: 'md:px-[10%] xl:px-[20%] 2xl:px-[30%]',
+        // closeButton: 'md:mr-[10%] xl:mr-[20%] 2xl:mr-[30%] text-xl'
       },
       component: (onClose: () => void) => <PublishStory onClose={onClose} />
     })
