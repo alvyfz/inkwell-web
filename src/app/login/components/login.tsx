@@ -5,7 +5,9 @@ import React, { useState } from 'react'
 import { useForm } from '@mantine/form'
 import toast from '@/helpers/toast'
 import Link from 'next/link'
-import { Button, Image, Input } from '@heroui/react'
+import { Button, Image, Input, Divider } from '@heroui/react'
+import { Icon } from '@iconify/react'
+import { signIn } from 'next-auth/react'
 import ThemeModeButton from '@/components/ThemeModeButton'
 import { requestAPI } from '@/helpers/api-request'
 import { PATH_API } from '@/helpers/api-uri'
@@ -143,6 +145,32 @@ export default function Login() {
               >
                 SIGN IN
               </Button>
+              
+              <div className="flex items-center gap-4 my-4">
+                <Divider className="flex-1" />
+                <span className="text-sm text-gray-500">or</span>
+                <Divider className="flex-1" />
+              </div>
+              
+              <div className="flex flex-col gap-3">
+                <Button
+                  variant="bordered"
+                  size={isPortrait ? 'md' : 'lg'}
+                  startContent={<Icon icon="mdi:github" className="text-xl" />}
+                  onPress={() => signIn('github', { callbackUrl: redirect || '/app' })}
+                >
+                  Continue with GitHub
+                </Button>
+                <Button
+                  variant="bordered"
+                  size={isPortrait ? 'md' : 'lg'}
+                  startContent={<Icon icon="mdi:google" className="text-xl" />}
+                  onPress={() => signIn('google', { callbackUrl: redirect || '/app' })}
+                >
+                  Continue with Google
+                </Button>
+              </div>
+              
               <h3 className="text-center text-foreground">
                 Don&#39;t have an account?{' '}
                 <Link className="text-primary font-medium" href="/signup">
