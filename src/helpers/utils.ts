@@ -1,4 +1,4 @@
-import nextConfig from "../../next.config"
+import nextConfig from '../../next.config'
 
 export const isValidEmail = (email: string): boolean => /^\S+@\S+$/.test(email)
 
@@ -15,4 +15,4 @@ export const capitalizeWords = (string: string) =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
 
-export const isDevEnv = nextConfig?.env?.ENV === 'DEV'
+export const isDevEnv = nextConfig?.env?.NODE_ENV === 'development'
