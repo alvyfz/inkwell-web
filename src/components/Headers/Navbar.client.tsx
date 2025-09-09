@@ -14,7 +14,7 @@ import {
   Image
 } from '@heroui/react'
 import { ReactNode } from 'react'
-import { useAuth } from '@/contexts/authContext'
+import { useAuth } from '@/contexts/AuthContext'
 import ThemeModeButton from '../ThemeModeButton'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { usePathname } from 'next/navigation'

@@ -1,4 +1,4 @@
-import nextConfig from "../../next.config"
+import nextConfig from '../../next.config'
 
 export const isValidEmail = (email: string): boolean => /^\S+@\S+$/.test(email)
 
@@ -16,3 +16,7 @@ export const capitalizeWords = (string: string) =>
     .join(' ')
 
 export const isDevEnv = nextConfig?.env?.ENV === 'DEV'
+
+export function jwtExpToCookieExp(exp: number): Date {
+  return new Date(exp * 1000)
+}

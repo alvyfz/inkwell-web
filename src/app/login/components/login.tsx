@@ -1,81 +1,18 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useState } from 'react'
-import { useForm } from '@mantine/form'
-import toast from '@/helpers/toast'
-import Link from 'next/link'
-import { Button, Image, Input, Divider } from '@heroui/react'
+import { useSearchParams } from 'next/navigation'
+import React from 'react'
+import { Button, Image } from '@heroui/react'
 import { Icon } from '@iconify/react'
 import { signIn } from 'next-auth/react'
 import ThemeModeButton from '@/components/ThemeModeButton'
-import { requestAPI } from '@/helpers/api-request'
-import { PATH_API } from '@/helpers/api-uri'
-import Cookies from 'js-cookie'
-import { decodeJwt, isValidEmail } from '@/helpers/utils'
 import useOrientation from '@/hooks/useOrientation'
-import { isEmpty } from 'lodash'
-
-type LoginFormType = {
-  email: string
-  password: string
-}
 
 export default function Login() {
   const orientation = useOrientation()
   const isPortrait = orientation === 'portrait'
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect') as string
-
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const form = useForm({
-    initialValues: {
-      email: '',
-      password: ''
-    } as LoginFormType,
-    validate: {
-      email: (value: string) => (isValidEmail(value) ? null : 'Invalid email'),
-      password: (value: string) => (value.length >= 8 ? null : 'Minimum eight characters')
-    }
-  })
-
-  const handleSubmit = async (values: LoginFormType) => {
-    if (form.isValid()) {
-      setIsLoading(true)
-
-      const response = await requestAPI.post(PATH_API.LOGIN, {
-        params: {
-          email: values.email,
-          password: values.password
-        }
-      })
-
-      if (!response.isSuccess) {
-        if (response.code === 402) {
-          toast.error('Please verify your email first.')
-          router.replace(
-            `/signup/verify-email?email=${values.email}${!isEmpty(redirect) ? `&redirect=${redirect}` : ''}`
-          )
-        } else {
-          toast.error(response.message)
-        }
-      } else {
-        const jwtData = decodeJwt(response.payload.token)
-        Cookies.set('Authorization', response.payload.token, {
-          expires: jwtData.expire,
-          secure: true,
-          path: '/'
-        })
-        if (isEmpty(redirect)) {
-          router.replace('/app')
-        } else {
-          router.replace(redirect)
-        }
-      }
-      setIsLoading(false)
-    }
-  }
 
   return orientation ? (
     <div className="w-screen h-screen bg-black">
@@ -107,49 +44,10 @@ export default function Login() {
           className={`bg-background  ${isPortrait ? 'rounded-t-xl  h-fit' : 'w-[50%] h-full rounded-l-xl'} `}
         >
           <div className={`flex h-full justify-center ${isPortrait ? 'py-8' : 'items-center'}`}>
-            <form
-              className="flex flex-col gap-4 w-[80%] md:w-[60%] lg:w-[50%] "
-              onSubmit={form.onSubmit((values: LoginFormType) => handleSubmit(values))}
-            >
-              <Input
-                size={isPortrait ? 'md' : 'lg'}
-                label="Email Address"
-                type="email"
-                {...form.getInputProps('email')}
-                errorMessage={form.errors.email}
-                isInvalid={!!form.errors.email}
-                isRequired
-                variant="bordered"
-              />
-              <div>
-                <Input
-                  size={isPortrait ? 'md' : 'lg'}
-                  label="Password"
-                  type="password"
-                  {...form.getInputProps('password')}
-                  errorMessage={form.errors.password}
-                  isInvalid={!!form.errors.password}
-                  isRequired
-                  variant="bordered"
-                />
-                <Link className="text-primary font-medium text-sm pt-1" href="/forgot-password">
-                  Forgot password?
-                </Link>
-              </div>
-
-              <Button
-                type="submit"
-                color="primary"
-                size={isPortrait ? 'md' : 'lg'}
-                isLoading={isLoading}
-              >
-                SIGN IN
-              </Button>
-              
-              <div className="flex items-center gap-4 my-4">
-                <Divider className="flex-1" />
-                <span className="text-sm text-gray-500">or</span>
-                <Divider className="flex-1" />
+            <div className="flex flex-col gap-4 w-[80%] md:w-[60%] lg:w-[50%]">
+              <div className="text-center mb-6">
+                <h2 className="text-2xl font-bold mb-2">Welcome Back</h2>
+                <p className="text-gray-600">Sign in to your account using OAuth</p>
               </div>
               
               <div className="flex flex-col gap-3">
@@ -170,14 +68,7 @@ export default function Login() {
                   Continue with Google
                 </Button>
               </div>
-              
-              <h3 className="text-center text-foreground">
-                Don&#39;t have an account?{' '}
-                <Link className="text-primary font-medium" href="/signup">
-                  Sign Up
-                </Link>
-              </h3>
-            </form>
+            </div>
           </div>
         </div>
       </div>

@@ -55,6 +55,7 @@ export const authOptions: NextAuthOptions = {
               httpOnly: true,
               secure: !isDevEnv
             })
+
             return true
           }
         } catch (error) {
@@ -68,7 +69,7 @@ export const authOptions: NextAuthOptions = {
       console.log(token, user, account, 'jwt')
       if (user) {
         token.id = user.id
-        token.username = (user as any).username
+        token.username = user.username
         token.avatar = user.image
       }
       return token
@@ -76,9 +77,9 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       console.log(session, token, 'session')
       if (token) {
-        session.user = session.user || {}
-        session.user.email = token.email as string
-        session.user.image = token.avatar as string
+        session.user.id = token.id as string
+        session.user.username = token.username as string
+        session.user.avatar = token.avatar as string
       }
       return session
     }

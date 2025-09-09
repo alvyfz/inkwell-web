@@ -4,9 +4,11 @@ import { HeroUIProvider, ToastProvider } from '@heroui/react'
 import { ReactNode } from 'react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { SessionProvider } from 'next-auth/react'
-import { AuthProvider } from '@/contexts/authContext'
+import { AuthProvider } from '@/contexts/AuthContext'
 import { GlobalProvider } from '@/contexts/globalContext'
 import ModalProvider from '@/components/ModalProvider'
+import LoginSuccessNotification from '@/components/LoginSuccessNotification'
+import { SessionDebug } from '@/components/AuthStatus'
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
@@ -16,7 +18,11 @@ export function Providers({ children }: { children: ReactNode }) {
           <AuthProvider>
             <GlobalProvider>
               <ToastProvider placement="bottom-center" />
-              <ModalProvider>{children}</ModalProvider>
+              <ModalProvider>
+                {children}
+                <LoginSuccessNotification />
+                <SessionDebug />
+              </ModalProvider>
             </GlobalProvider>
           </AuthProvider>
         </NextThemesProvider>
