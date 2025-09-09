@@ -15,4 +15,4 @@ export const capitalizeWords = (string: string) =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
 
-export const isDevEnv = nextConfig?.env?.NODE_ENV === 'development'
+export const isDevEnv = nextConfig?.env?.ENV === 'development'
